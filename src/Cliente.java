@@ -1,4 +1,4 @@
-public class Cliente {
+public class Cliente implements Comprador{
     private String nombre;
     private String apellido;
     private int documento;
@@ -34,5 +34,19 @@ public class Cliente {
 
     public void setDocumento(int documento) {
         this.documento = documento;
+    }
+
+    @Override
+    public void realizarPedido(Pedido pedido, Empresa empresa){
+        if(empresa instanceof Tienda){
+            Pedido[] pedidos = ((Tienda) empresa).getPedidosCliente();
+            for(int i = 0 ; i < pedidos.length ; i++){
+                if(pedidos[i] == null){
+                    pedidos[i] = pedido;
+                    ((Tienda) empresa).setPedidosCliente(pedidos);
+                    break;
+                }
+            }
+        }
     }
 }

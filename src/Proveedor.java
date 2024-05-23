@@ -1,7 +1,7 @@
 public class Proveedor extends Empresa implements Facturacion{
     private String nombreContacto;
     private String telefonoContacto;
-    private Pedido pedidosTienda[] = new Pedido[10];
+    private Pedido[] pedidosTienda = new Pedido[10];
 
 
     public Proveedor() {
@@ -38,7 +38,33 @@ public class Proveedor extends Empresa implements Facturacion{
     }
 
     @Override
-    public void emitirFactura(Transaccion transaccion) {
+    public void emitirFactura(Transaccion transaccion){
+        if(transaccion instanceof Compra){
+            double total = 0;
+             Articulo[] articulosTienda =((Compra) transaccion).getTienda().getInventario();
+             Articulo[] articulosPedido = transaccion.getPedido().getArticulos();
+             for(int j = 0 ; j < articulosPedido.length ; j++) {
+                 for(int i = 0 ; i < articulosTienda.length ; i++){
+                     if (articulosTienda[i] == null) {
+                         articulosTienda[i] = articulosPedido[j];
+                         total+=articulosPedido[j].getPrecio();
+                     }
+                 }
+             }
+             if(total < 100000){
+                 total=(total*0.95);
+             }else if(total >= 100000 && total < 600000){
+                 total=(total*0.90);
+             } else if(total >= 600000 && total <= 1200000){
+                 total=(total*0.80);
+             }else if(total > 1200000){
+                 total=(total*0.70);
+             }
+             transaccion.setMontoTotal(total);
+        }
+    }
 
+    public void despacharPedidos(Pedido[] pedidos){
+        Pedido[] pedidosTienda = this.pedidosTienda;
     }
 }

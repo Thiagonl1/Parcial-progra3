@@ -5,8 +5,6 @@ public class Pedido {
     private String fechaCotizacion;
 
 
-
-
     public Pedido(int id, Articulo[] articulos, double cotizacionTotal, String fechaCotizacion) {
         this.id = id;
         this.articulos = articulos;

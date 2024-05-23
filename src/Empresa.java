@@ -26,7 +26,6 @@ public class Empresa {
         this.cuit = cuit;
     }
 
-    public void despacharPedidos(){
-
+    public void despacharPedidos(Pedido[] pedidos){
     }
 }
